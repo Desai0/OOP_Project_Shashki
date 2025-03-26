@@ -11,7 +11,6 @@ public:
     PieceType getType() const;
     void makeKing();
     bool isKing() const;
-    // Другие методы, если нужны (например, для графики - получение спрайта)
 
 private:
     PieceColor color;

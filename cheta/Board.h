@@ -9,6 +9,7 @@
 class Board {
 public:
 	Board();
+	~Board();
 
 	void initialize(); // Расстановка шашек в начальное положение
 	Piece* getPiece(int row, int col) const; // Получить шашку по координатам.  Возвращает nullptr, если клетка пуста.
@@ -26,18 +27,19 @@ public:
 	void clearPiece(int row, int col);
 
 	int getBoardSize() const { return boardSize; }
-
-	Board clone() const; //Для реализации AI
+	bool isJumpPossible(int fromRow, int fromCol, int toRow, int toCol, PieceColor playerColor) const;
+	bool isInsideBoard(int row, int col) const;
+	bool canJumpFrom(int row, int col, PieceColor playerColor) const;
 
 private:
 	std::vector<std::vector<Piece*>> board;
 	static const int boardSize = 8;  // Размер доски
-
-	bool isInsideBoard(int row, int col) const;
-	bool isJumpPossible(int fromRow, int fromCol, int toRow, int toCol, PieceColor playerColor) const;
+	
+	
+	
 	bool isRegularMovePossible(int fromRow, int fromCol, int toRow, int toCol, PieceColor playerColor) const;
 
-	bool canJumpFrom(int row, int col, PieceColor playerColor) const;
+	
 };
 
 #endif

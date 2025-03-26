@@ -14,43 +14,35 @@ PieceColor Player::getColor() const {
 
 HumanPlayer::HumanPlayer(const std::string& name, PieceColor color) : Player(name, color) {}
 
-std::pair<std::pair<int, int>, std::pair<int, int>> HumanPlayer::getMove(const Board& board, bool isFlipped) {
+std::pair<std::pair<int, int>, std::pair<int, int>> HumanPlayer::getMove(const Board& board) {
     int fromRow, fromCol, toRow, toCol;
+    int boardSize = board.getBoardSize(); // Получаем размер доски один раз
 
     while (true) {
-        std::cout << name << ", enter your move (fromRow fromCol toRow toCol): ";
+        // Используем Player::getColor() для получения цвета
+        std::string colorStr = (getColor() == PieceColor::WHITE) ? "White" : "Black";
+        std::cout << name << " (" << colorStr << "), enter your move (fromRow fromCol toRow toCol): ";
+
         if (std::cin >> fromRow >> fromCol >> toRow >> toCol) {
-
-            int boardSize = board.getBoardSize();
-            if (isFlipped) { // Инвертируем ВСЕГДА, если доска перевернута
-                fromRow = boardSize - 1 - fromRow;
-                fromCol = boardSize - 1 - fromCol;
-                toRow = boardSize - 1 - toRow;
-                toCol = boardSize - 1 - toCol;
-            }
-
-            if (fromRow >= 0 && fromRow < board.getBoardSize() &&
-                fromCol >= 0 && fromCol < board.getBoardSize() &&
-                toRow >= 0 && toRow < board.getBoardSize() &&
-                toCol >= 0 && toCol < board.getBoardSize())
+            // Проверяем только базовую корректность координат
+            if (fromRow >= 0 && fromRow < boardSize &&
+                fromCol >= 0 && fromCol < boardSize &&
+                toRow >= 0 && toRow < boardSize &&
+                toCol >= 0 && toCol < boardSize)
             {
-                if (board.getPieceColor(fromRow, fromCol) == getColor()) { // Используем getColor()
-                    break;
-                }
-                else {
-                    std::cout << "Invalid move: No piece of your color at the starting position." << std::endl;
-                }
+                break; // Координаты в пределах доски, выходим из цикла
             }
             else {
-                std::cout << "Invalid move: Coordinates out of range." << std::endl;
+                std::cout << "Invalid input: Coordinates must be between 0 and " << (boardSize - 1) << "." << std::endl;
             }
         }
         else {
-            std::cout << "Invalid input: Please enter four integers." << std::endl;
-            std::cin.clear();
+            std::cout << "Invalid input format. Please enter four integers separated by spaces." << std::endl;
+            std::cin.clear(); // Сбросить флаги ошибок ввода
+            // Очистить буфер ввода до следующей новой строки
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
-
+    // Возвращаем введенные координаты
     return { {fromRow, fromCol}, {toRow, toCol} };
 }

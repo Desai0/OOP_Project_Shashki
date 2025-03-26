@@ -16,6 +16,5 @@ int main() {
     game.start();
 
 
-    //„тобы не удал€лись player1 и player2, делаем это в деструкторе Game.
     return 0;
 }

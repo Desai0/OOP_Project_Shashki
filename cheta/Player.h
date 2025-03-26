@@ -12,7 +12,7 @@ public:
     const std::string& getName() const;
     PieceColor getColor() const;
 
-    virtual std::pair<std::pair<int, int>, std::pair<int, int>> getMove(const Board& board, bool isFlipped = false) = 0; //Добавили параметр.
+    virtual std::pair<std::pair<int, int>, std::pair<int, int>> getMove(const Board& board) = 0; //Добавили параметр.
     virtual ~Player() = default;
 
 
@@ -25,7 +25,7 @@ protected:
 class HumanPlayer : public Player {
 public:
     HumanPlayer(const std::string& name, PieceColor color);
-    std::pair<std::pair<int, int>, std::pair<int, int>> getMove(const Board& board, bool isFlipped) override;
+    std::pair<std::pair<int, int>, std::pair<int, int>> getMove(const Board& board) override;
 };
 
 #endif

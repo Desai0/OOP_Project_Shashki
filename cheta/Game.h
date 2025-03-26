@@ -25,7 +25,6 @@ private:
 	int currentPlayerIndex;
 	GameState gameState;
 	bool whiteStarts;
-	bool isBoardFlipped() const; //Добавили метод для проверки, нужно ли перевернуть доску
 
 	void switchPlayer();
 	bool makePlayerMove();
